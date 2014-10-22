@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<meta xmlns="http://exist-db.org/xquery/repo">
+    <description>Tools for unleashing the power of ODD</description>
+    <author>Peter Stadler</author>
+    <website>http://edirom.de/odd-tools</website>
+    <status>alpha</status>
+    <license>GNU-LGPL</license>
+    <copyright>true</copyright>
+    <type>application</type>
+    <target>odd-tools</target>
+    <prepare>pre-install.xql</prepare>
+    <finish/>
+    <deployed>2014-10-11T12:02:37.77+02:00</deployed>
+</meta>
