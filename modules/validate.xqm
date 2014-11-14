@@ -10,7 +10,7 @@ declare namespace expath-http = "http://expath.org/ns/http-client";
 declare namespace compression = "http://exist-db.org/xquery/compression";
 
 import module namespace functx="http://www.functx.com";
-
+import module namespace config="http://edirom.de/odd-tools/config" at "config.xqm";
 
 (:~
  : Main entry function:
@@ -47,13 +47,17 @@ declare function validate:odd-schema($input as node(), $odd as node(), $fragment
         else if($tei-version)
 :)
 
-declare function validate:tei-schema($input as node(), $tei-version as xs:string, $fragment as xs:boolean, $remove-foreign-ns as xs:boolean) as element(report) {
-    let $schema-doc := function($version as xs:string) as document-node() {
-        doc('/db/TEI/tei_all.rng')
-    }
+declare function validate:tei-schema($input as node(), $tei-version as xs:string, $fragment as xs:boolean, $remove-foreign-ns as xs:boolean) {
     let $schema := 
-        if($fragment) then <rng:grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0">{$schema-doc($tei-version)/rng:grammar/*[not(node-name(.) = xs:QName('rng:start'))], <rng:start><rng:ref name="{local-name($input)}"/></rng:start>}</rng:grammar>
-        else $schema-doc($tei-version)/rng:grammar
+        if($fragment) then 
+            let $start-node-name := 
+                typeswitch ($input)
+                    case element() return local-name($input)
+                    case document-node() return local-name($input/*)
+                    default return error(xs:QName('validate:unsupported-node'), 'type ' || node-name($input) || ' not supported')
+            return 
+                <rng:grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0">{config:tei-schema($tei-version)/rng:grammar/*[not(node-name(.) = xs:QName('rng:start'))], <rng:start><rng:ref name="{$start-node-name}"/></rng:start>}</rng:grammar>
+        else config:tei-schema($tei-version)/rng:grammar
     let $input := 
         if($remove-foreign-ns) then validate:strip-non-tei-ns($input)
         else $input
@@ -66,8 +70,8 @@ declare function validate:tei-schema($input as node(), $tei-version as xs:string
  : Remove elements and attributes which are not in the TEI or XML namespace
  :
  : @author Peter Stadler
- : @param $node The input node
- : @return For TEI nodes, the TEI element (or attribute) node without foreign child nodes. The empty sequence for non-TEI nodes
+ : @param $node The input node to remove the foreign nodes from
+ : @return node() The output node without the foreign nodes
 ~:)
 declare function validate:strip-non-tei-ns($node as node()*) as node()* {
     typeswitch($node)
