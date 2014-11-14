@@ -1,0 +1,23 @@
+/* Application styles could go here */
+footer .poweredby { float: right; margin: 33px 10px 0 0;}
+footer .poweredby img { width: 120px; }
+
+#results li {
+    padding: 0.5pc 0.5em;
+    list-style-type:none;
+}
+
+.invalid {
+    background-color: #f2dede;
+    color: #a94442;
+}
+
+.conformable, .fragment, .externalNS {
+    background-color: #fcf8e3;
+    color: #8a6d3b;
+}
+
+.conformant, .header {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
