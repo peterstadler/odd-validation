@@ -1,0 +1,51 @@
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Validation Results</title>
+         </titleStmt>
+         <publicationStmt>
+            <publisher>Project Edirom</publisher>
+            <availability>
+               <ab>Some rights reserved, available under dual license:</ab>
+               <licence><ref target="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License (CC BY 3.0)</ref></licence>
+               <licence><ref target="http://opensource.org/licenses/BSD-2-Clause">BSD 2-Clause</ref></licence>
+            </availability>
+            <date><!-- To be replaced --></date>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Born digital</p>
+         </sourceDesc>
+      </fileDesc>
+     <encodingDesc>
+        <appInfo>
+           <application ident="ovs" version="0.0.1">
+              <label>ODD Validation Service</label>
+              <desc>A webservice for validating TEI files, written by Peter Stadler</desc>
+              <ptr target="https://github.com/peterstadler/odd-validation"/>
+           </application>
+        </appInfo>
+     </encodingDesc>
+  </teiHeader>
+  <text>
+      <body>
+         <div type="inputProperties">
+            <!-- To be replaced -->
+            <list type="gloss">
+               <label>format</label>
+               <item>xml</item>
+            </list>
+         </div>
+         <div type="results">
+            <!-- To be replaced -->
+            <head type="status">Invalid</head>
+            <div type="message">
+               <list type="gloss">
+                  <label>Level</label>
+                  <item>Error</item>
+               </list>
+            </div>
+         </div>
+      </body>
+  </text>
+</TEI>
