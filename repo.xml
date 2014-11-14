@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <meta xmlns="http://exist-db.org/xquery/repo">
-    <description>Tools for unleashing the power of ODD</description>
+    <description>TEI Validation Service with ODD powers</description>
     <author>Peter Stadler</author>
-    <website>http://edirom.de/odd-tools</website>
+    <website>https://github.com/peterstadler/odd-validation</website>
     <status>alpha</status>
-    <license>GNU-LGPL</license>
+    <license>GNU-GPLv3</license>
     <copyright>true</copyright>
     <type>application</type>
-    <target>odd-tools</target>
-    <prepare>pre-install.xql</prepare>
-    <finish/>
+    <target>ODD-validation</target>
+<!--    <prepare>pre-install.xql</prepare>-->
+<!--    <finish/>-->
     <deployed>2014-10-11T12:02:37.77+02:00</deployed>
 </meta>

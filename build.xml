@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="xar" name="odd-validation">
+    
+    <!-- import default properties from file -->
+    <property file="local.build.properties"/>
+    <property file="build.properties"/>
+    
+    <!-- ANT contrib -->
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+    
+    <target name="all" depends="xar"/>
+    <target name="rebuild" depends="clean,all"/>
+    
+    <target name="clean">
+        <delete dir="${dist.dir}"/>
+        <delete file="expath-pkg.xml"/>
+    </target>
+    
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+    </target>
+    
+    <target name="download-tei-schemas" depends="init">
+        <mkdir dir="${dist.dir}/schemas"/>
+        <propertyselector property="schema.list" delimiter="," match="tei_all\.\d\.\d\.\d"/>
+        <foreach delimiter="," list="${schema.list}" target="download-tei-schema" param="schema.name"/>
+    </target>
+    
+    <target name="download-tei-schema">
+        <propertycopy name="schema.url" from="${schema.name}" />
+        <get dest="${dist.dir}/schemas/${schema.name}.rng" skipexisting="yes" src="${schema.url}"/>
+        <!--<echo message="${schema.url}" />-->
+    </target>
+    
+    <target name="dist" depends="init, download-tei-schemas">
+        <copy file="expath-pkg.xml.tmpl" tofile="${dist.dir}/expath-pkg.xml" filtering="true" overwrite="true">
+            <filterset>
+                <filter token="project.version" value="${project.version}"/>
+                <filter token="project.abbrev" value="${project.abbrev}"/>
+                <filter token="project.app" value="${project.app}"/>
+            </filterset>
+        </copy>
+        <!-- Copy everything from base.dir -->
+        <copy todir="${dist.dir}">
+            <fileset dir=".">
+                <include name="*.*"/>
+                <include name="modules/**"/>
+                <include name="resources/**"/>
+                <include name="templates/**"/>
+                <exclude name="build.xml"/>
+                <exclude name="*build.properties"/>
+                <exclude name=".git*"/>
+                <exclude name="*.tmpl"/>
+                <exclude name="*.txt"/>
+                <exclude name="bower.json"/>
+            </fileset>
+        </copy>
+    </target>
+    
+    <target name="xar" depends="init, dist">
+        <zip destfile="${build.dir}/${project.abbrev}-${project.version}.xar">
+            <fileset dir="${dist.dir}">
+                <!--<include name="*.*"/>
+                <include name="modules/**"/>
+                <include name="resources/**"/>
+                <include name="catalogues/**"/>
+                <include name="indices/**"/>
+                <include name="xsl/**"/>
+                <exclude name="build.xml"/>
+                <exclude name="*build.properties"/>
+                <exclude name=".git*"/>
+                <exclude name="*.tmpl"/>
+                <exclude name="*.txt"/>-->
+            </fileset>
+        </zip>
+    </target>
+</project>
