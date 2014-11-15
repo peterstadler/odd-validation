@@ -18,7 +18,7 @@ declare function tei2json:dispatch($node as node()) as item()* {
         case element(tei:head) return tei2json:head($node)
         case element(tei:list) return tei2json:list($node)
         case element(tei:label) return tei2json:label($node)
-(:        case element(tei:item) return tei2json:item($node):)
+        case element(tei:item) return tei2json:item($node)
         default return ()
 };
 
@@ -44,12 +44,19 @@ declare function tei2json:list($node as node()) as element(pair)* {
     (:<pair type="object">
         {$node/tei:label ! tei2json:dispatch(.)}
     </pair>:)
-    $node/tei:label ! tei2json:dispatch(.)
+    if($node[@type='gloss']) then $node/tei:label ! tei2json:dispatch(.)
+    else <pair type="array" name="{$node/string(tei:head)}">{$node/tei:item ! tei2json:dispatch(.)}</pair>
 };
 
 declare function tei2json:label($node as node()) as element(pair) {
     <pair type="string" name="{$node/string()}">
         {$node/following-sibling::tei:item[1]/string()}
     </pair>
+};
+
+declare function tei2json:item($node as node()) as element(item) {
+    <item type="string">
+        {$node/node() ! tei2json:dispatch(.)}
+    </item>
 };
 

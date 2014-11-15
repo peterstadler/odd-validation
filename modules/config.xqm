@@ -36,7 +36,7 @@ declare variable $config:app-root :=
 :)
 declare variable $config:tei-schema-dir := $config:app-root || "/schemas";
 declare variable $config:TEItemplate := doc('/db/apps/odd-tools/templates/results.xml');
-declare variable $config:valid-request-params := ('version', 'task', 'xmlFile', 'oddFile');
+declare variable $config:valid-request-params := ('version', 'task', 'xmlFile', 'oddFile', 'strip-external-ns', 'token');
 (:
     ****************
     General Settings END

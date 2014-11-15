@@ -1,7 +1,7 @@
 <div xmlns="http://www.w3.org/1999/xhtml" data-template="templates:surround" data-template-with="templates/page.html" data-template-at="content">
     <div class="row">
         <div class="page-header">
-            <h1>Validate against tei_all</h1>
+            <h1>Validate TEI files with ODD powers</h1>
         </div>
         <div class="col-md-6">
             
@@ -33,12 +33,12 @@
             <h2>Results</h2>
             <ul class="tei-validate list-group">
                 <li class="list-group-item header">Trying to validate against <span class="tei-version">%teiversion%</span></li>
-                <li class="fragment list-group-item">The file <span class="fileName">%fileName%</span> has the root element <code><span class="rootElement">%rootElement%</span></code>. 
-                    For a valid TEI document that needs to be <code>&lt;TEI&gt;</code> or <code>&lt;teiCorpus&gt;</code>.
-                    Validation will proceed and treat this file as a fragment of a TEI document.
-                </li>
                 <li class="externalNS list-group-item">The file <span class="fileName">%fileName%</span> incorporates elements from non-TEI namespaces.
                     Validation will proceed by removing those external namespaces.</li>
+                <li class="fragment list-group-item">The file <span class="fileName">%fileName%</span> has the root element <code><span class="rootElement">%rootElement%</span></code>. 
+                    For a valid TEI document that needs to be <code>&lt;tei:TEI&gt;</code> or <code>&lt;tei:teiCorpus&gt;</code>.
+                    Validation will proceed and treat this file as a <em>fragment</em> of a TEI document.
+                </li>
                 <li class="conformant list-group-item">The file <span class="fileName">%fileName%</span> is valid, hence a TEI <em>conformant</em> document!</li>
                 <li class="conformable list-group-item">The file <span class="fileName">%fileName%</span> is valid with the aforementioned restrictions, so we can call it a TEI <em>conformable</em> document!</li>
                 <li class="invalid list-group-item">The file <span class="fileName">%fileName%</span> is invalid!</li>
