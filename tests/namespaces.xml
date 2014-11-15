@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="namespaces.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>There and Back Again: digital edition</title>
+        <author xml:id="HannaRenton">Hanna Renton</author>
+        <editor xml:id="TBE">The TBE crew</editor>
+      </titleStmt>
+      <publicationStmt>
+        <p>born digital</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>taken from <ref target="http://tbe.kantl.be/TBE/modules/TBED06v00.htm">TBE Module 6</ref>.</p>
+      </sourceDesc>
+      <!--...-->
+    </fileDesc>
+    <!--...-->
+    <profileDesc>
+      <!--...-->
+      <handNotes>
+        <handNote xml:id="HR" scribe="HannaRenton" script="handwritten" medium="pencil" scope="major">
+          <p>the document's main hand, Hanna Renton</p>
+        </handNote>
+        <handNote xml:id="teacher" scribe="classTeacher" script="handwritten" medium="red_ballpen" scope="minor">
+          <p>the document author's teacher</p>
+        </handNote>
+      </handNotes>
+    </profileDesc>
+    <!--...-->
+  </teiHeader>
+  <text>
+    <body>
+      <pb n="1" facs="scans/TBA001.jpg"/>
+      <dateline>
+        <date when="2008-08-26"><damage agent="stapling" hand="#teacher" unit="chars" quantity="3">
+          <supplied resp="#TBE">26/</supplied>
+        </damage>8/08</date>
+      </dateline>
+      <head>There and Back Again</head>
+      <p><add place="margin" resp="#TBE" hand="#teacher">Well done! <lb/>8,5 / 10</add>I can't bel<subst hand="#teacher" resp="#TBE">
+        <del rend="strikethrough">ei</del>
+        <add>ie</add>
+      </subst>ve it. Carl has not written to me or sent me a postcard once since he's been away in Egypt. It would be easier if our phone was working. It's been broken for ages! Dad can't fix it at the moment, and we can't afford to buy a new one. I would write to him, but he didn't tell me the address of the villa he was staying in. If only I had a mobile, I could phone his mobile number. Eureka!!! I could use next <choice>
+        <sic>doors</sic>
+        <corr>door's</corr>
+      </choice> phone, oh, actually, Mr and Mrs Crooel won't let me use it (they're my next door neighbours). I know! I'll use the phone box!!! (I think I've got some change).</p>
+      <p>Goodness me, this phone box stinks. EEAW, I don't even want to know what that is. Anyway, I hope his phone is switched on. What's it again??? Oh, yeah 1312632. Arrgh!! <choice>
+        <sic>W<subst hand="#HR" resp="#TBE">
+          <del rend="overwritten">a</del>
+          <add>h</add>
+        </subst>ats</sic>
+        <corr>What's</corr>
+      </choice> happening!!! Who's shaking the phone box!! Who turned <restore hand="#HR" resp="#TBE">
+        <subst>
+          <del rend="crossout">out</del>
+          <add place="margin">off</add>
+        </subst>
+      </restore> the lights!!!!</p>
+      <p>WOW!!! Where am I? Why is everything so <choice>
+        <sic>smokey</sic>
+        <corr>smoky</corr>
+      </choice>? Everything is <colorName xmlns="https://github.com/peterstadler/odd-validation/tests">silver</colorName> except the air around me, it's <colorName xmlns="https://github.com/peterstadler/odd-validation/tests">black</colorName>, and I'm standing in a <colorName xmlns="https://github.com/peterstadler/odd-validation/tests">silver</colorName> pod, with something that <choice>
+        <sic>lookes</sic>
+        <corr>looks</corr>
+      </choice> like a phone. When you look up there are millions of metal poles, and some of them have w<subst hand="#HR" resp="#TBE">
+        <del rend="overwritten">a</del>
+        <add>h</add>
+      </subst>at look like funny shaped cars whizzing along attached to the metal poles at the top.</p>
+      <pb facs="scans/TBA001b.jpg"/>
+      <pb n="2" facs="scans/TBA002.jpg"/>
+      <p>There seem<del rend="crossout" hand="#HR">e</del>s to be no-one around <add place="above" hand="#HR">the phone box</add>. Yuk! <subst hand="#HR" resp="#TBE">
+        <del rend="writeover">s</del>
+        <add>S</add>
+      </subst>omeone has just walked past. All their skin is black and crusty and in the side of their neck are <unclear reason="illegible" resp="#TBE">gitt</unclear> like things. The whites of his or her eyes are grey and he, or she has no hair. I also notice that he, or she has a clear gas mask. It's from all the smoke.</p>
+      <p>Goodness me! I just stepped outside the phone box and I couldn'<unclear reason="cutoff-while-xeroxing" resp="#TBE">t</unclear> breath<add hand="#teacher">e</add>. <add hand="#teacher" place="margin">"breath" = noun <lb/> "to breathe" = verb</add> It was like a <choice>
+        <sic>kng</sic>
+        <corr>king</corr>
+      </choice> cobra was wrapped around my neck and if I was to get a little bit of air in it was horrible, like when you stop at red man beside the traffic lights and a bus is stopped beside you and you're getting breaths of <choice>
+        <sic>carben di<subst resp="#TBE">
+          <del hand="#HR" rend="overwritten">ox</del>
+          <add hand="#HR">acx</add>
+        </subst>side</sic>
+        <corr>carbon dioxide</corr>
+      </choice>. But this was 100x worse. Now I know what all the black air is: all the <choice>
+        <sic>polution</sic>
+        <corr>pollution</corr>
+      </choice>. But that doesn't help me figure out where I am.</p>
+      <p>What's that? It's a big poster <add hand="#HR" place="margin" resp="#TBE"><subst>
+        <del rend="crossout">at</del>
+        <add place="above">on</add>
+      </subst> the wall</add>, saying: Monday 26th May 1312632. I've gone into the future!!! Wait, I recognise the date. It's <choice>
+        <sic>Carls</sic>
+        <corr>Carl's</corr>
+      </choice> number! When I typed it in on the key pad in the phone box, that must <choice>
+        <sic>of</sic>
+        <corr>have</corr>
+      </choice> taken me into the future: I must get back and warn everyone! I'll type in 2008. Nothing was happeni<supplied reason="cutoff-while-xeroxing" resp="#TBE">ng.</supplied> Then, <quote>Hello, dearie</quote>, an old woman answere<supplied reason="cutoff-while-xeroxing" resp="#TBE">d.</supplied> <quote>Who is it?</quote> I hung up. Uh, oh. How do I get back then?</p>
+      <pb n="3" facs="scans/TBA003.jpg"/>
+      <p>I've been thinking for ages about what to do. There only seems to be one good option, fix and stop all the <choice>
+        <sic>polution</sic>
+        <corr>pollution</corr>
+      </choice>. This sort of seems like a dream, but a fun dream. I'll just have to find out where the city's power source is. <delSpan hand="#HR" resp="#TBE" rend="crossout" spanTo="#delEnd"/> But I've got to go outside (again).</p>
+      <p>It was <choice>
+        <sic>alot</sic>
+        <corr>a lot</corr>
+      </choice> easier to find than I thought it would be. <anchor xml:id="delEnd"/> I got round the corner and <choice>
+        <sic>ther</sic>
+        <corr>there</corr>
+      </choice> was a BIG sign saying <choice>
+        <sic>CITYS</sic>
+        <corr>CITY'S</corr>
+      </choice> POWER SOURCE. It's very oily and extremely big. Ah, this will be the switch.<gap reason="erasure" unit="cm" quantity="2" resp="#TBE"/></p>
+      <p>Everything has gone dark and I can't see where I'm going. I keep on banging into long bars and wires and knobs. Yess!! The door!!! <unclear reason="erasure" hand="#HR" resp="#TBE"><gap hand="#HR" unit="cm" extent="2,5"/>I got out.</unclear></p>
+      <p>There is uproar outside. I sealed the door with stones on the ground so no one could get <subst hand="#HR" resp="#TBE">
+        <del rend="overwritten">it</del>
+        <add>in</add>
+      </subst> to turn the switch back on.</p>
+      <p>I've been thinking. If I'm going to suck out all the <choice>
+        <sic>polution</sic>
+        <corr>pollution</corr>
+      </choice> I'm going to need help. Which is not going to be easy. <unclear reason="erasure" hand="#HR" resp="#TBE"><gap hand="#HR" unit="cm" quantity="2"/> cafe</unclear></p>
+      <p>Everyone keeps on staring at me. It's very annoying. I hope people will help!</p>
+      <p>OK. I think this will work. I've put up posters everywhere. They say... <quote>MEETING BESIDE PHONE BOX BE THERE AT 2pm</quote>. I hope they read <choice>
+        <sic>english</sic>
+        <corr>English</corr>
+      </choice>. And <choice>
+        <sic>english</sic>
+        <corr>English</corr>
+      </choice> time.</p>
+    </body>
+  </text>
+</TEI>

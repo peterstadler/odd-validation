@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Simple ODD file for demonstrating  the ODD validation service</title>
+        <author>Peter Stadler</author>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>Virtueller Forschungsverbund Edirom</publisher>
+        <availability>
+          <ab>Some rights reserved, available under dual license:</ab>
+          <licence><ref target="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License (CC BY 3.0)</ref></licence>
+          <licence><ref target="http://opensource.org/licenses/BSD-2-Clause">BSD 2-Clause</ref></licence>
+        </availability>
+        <date when="2014-11-15">November 15, 2014</date>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Born digital</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <schemaSpec ident="namespaces" start="TEI body">
+        <moduleRef key="header"/>
+        <moduleRef key="core"/>
+        <moduleRef key="tei"/>
+        <moduleRef key="textstructure"/>
+        <moduleRef key="linking"/>
+        <moduleRef key="transcr"/>
+        
+        <elementSpec ident="colorName" mode="add" ns="https://github.com/peterstadler/odd-validation/tests">
+          <classes>
+            <memberOf key="model.nameLike"/>
+          </classes>
+          <content>
+            <rng:text/>
+          </content>
+        </elementSpec>
+        
+      </schemaSpec>
+      
+    </body>
+  </text>
+</TEI>
