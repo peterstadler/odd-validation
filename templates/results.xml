@@ -1,11 +1,14 @@
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <!--
+      This file serves as a template for the validation results in TEI XML format of the ODD validation service https://github.com/peterstadler/odd-validation 
+   -->
   <teiHeader>
       <fileDesc>
          <titleStmt>
             <title>Validation Results</title>
          </titleStmt>
          <publicationStmt>
-            <publisher>Project Edirom</publisher>
+            <publisher>Virtueller Forschungsverbund Edirom</publisher>
             <availability>
                <ab>Some rights reserved, available under dual license:</ab>
                <licence><ref target="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License (CC BY 3.0)</ref></licence>
