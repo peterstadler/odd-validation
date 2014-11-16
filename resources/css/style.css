@@ -12,7 +12,7 @@ footer .poweredby img { width: 120px; }
     color: #a94442;
 }
 
-.conformable, .fragment, .externalNS {
+.conformable, .fragment, .externalNS, .oddFile {
     background-color: #fcf8e3;
     color: #8a6d3b;
 }

@@ -19,6 +19,7 @@ function validateForm(callback) {
 }
 
 function getLatestTEIVersion() {
+    // TODO
     return '2.7.0'
 }
 /*
@@ -59,9 +60,28 @@ function successFunction_teiValidate(msg) {
     
     $('#results .ajax-spinner').hide();
     if(msg.results.status === 'valid' && msg.properties.fragment === 'false' && msg.properties.externalNS === 'false') {$('#results .conformant').show()}
+    
+    else if(msg.properties.oddFile === 'true') {
+        $('#results .oddFile').show();
+        $('#results .ajax-spinner').show();
+        var testData = {
+            'task': 'odd-validate', 
+            'format': 'json', 
+            'token': msg.properties.token,
+            'version': msg.properties.version,
+            'fragment': msg.properties.fragment,
+            'externalNS': msg.properties.externalNS
+        };
+        callTest(testData, successFunction_oddValidate);
+    }
     else if(msg.results.status === 'invalid') {$('#results .invalid').show()}
-    else {$('#results .conformable').show()}
-    //$('#results .' + task).show();
+    else {$('#results .conformable').show()};
+}
+
+function successFunction_oddValidate(msg) {
+    $('#results .ajax-spinner').hide();
+    if(msg.results.status === 'invalid') {$('#results .invalid').show()}
+    else {$('#results .conformable').show()};
 }
 
 function callTest(data, successFunction) {

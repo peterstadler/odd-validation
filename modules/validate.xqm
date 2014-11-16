@@ -20,10 +20,9 @@ import module namespace config="http://edirom.de/odd-tools/config" at "config.xq
  : @param 
  : @return
 ~:)
-declare function validate:odd-schema($input as node(), $odd as node(), $fragment as xs:boolean, $remove-foreign-ns as xs:boolean) {
-    let $p5subset := doc('/db/TEI/p5subset.xml')
-    let $org-schema := doc('/db/TEI/tei_all.rng')
-(:    let $modified-elements := $odd//tei:elementSpec[@mode = ('add', 'change', 'replace')]:)
+declare function validate:odd-schema($input as node(), $tei-version as xs:string, $odd as node(), $fragment as xs:boolean, $remove-foreign-ns as xs:boolean) {
+    let $p5subset := config:p5subset($tei-version)
+    let $org-schema := config:tei-schema($tei-version)
     let $substitutes := map:new(
         for $i in $odd//tei:elementSpec[@mode = ('add')] 
         let $sub := validate:element-substitutes($i, $p5subset, true())
@@ -33,31 +32,18 @@ declare function validate:odd-schema($input as node(), $odd as node(), $fragment
     )
     let $replaced-input := validate:replace-element-names($input, $substitutes)
     let $schema := 
-        if($fragment) then validate:replace-start-element(local-name($input), $org-schema)
+        if($fragment) then validate:replace-start-element($input, $org-schema)
         else $org-schema
     return
         validation:jing-report($replaced-input, $schema)
 };
 
-(:
- let $supported-tei-versions := '2.7.0'
-    return
-        if(count($node) eq 0) then error(xs:QName('validate:no-input-node'), 'Missing input node for validation')
-        else if(count($node) gt 1) then error(xs:QName('validate:multiple-input-nodes'), 'Missing root element. No sequence of nodes allowed for validation')
-        else if($tei-version)
-:)
 
 declare function validate:tei-schema($input as node(), $tei-version as xs:string, $fragment as xs:boolean, $remove-foreign-ns as xs:boolean) {
+    let $org-schema := config:tei-schema($tei-version)
     let $schema := 
-        if($fragment) then 
-            let $start-node-name := 
-                typeswitch ($input)
-                    case element() return local-name($input)
-                    case document-node() return local-name($input/*)
-                    default return error(xs:QName('validate:unsupported-node'), 'type ' || node-name($input) || ' not supported')
-            return 
-                <rng:grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0">{config:tei-schema($tei-version)/rng:grammar/*[not(node-name(.) = xs:QName('rng:start'))], <rng:start><rng:ref name="{$start-node-name}"/></rng:start>}</rng:grammar>
-        else config:tei-schema($tei-version)/rng:grammar
+        if($fragment) then validate:replace-start-element($input, $org-schema)
+        else $org-schema
     let $input := 
         if($remove-foreign-ns) then validate:strip-non-tei-ns($input)
         else $input
@@ -215,14 +201,20 @@ declare %private function validate:replace-element-names($node as node(), $repla
 };
 
 
-declare %private function validate:replace-start-element($start as xs:string, $schema as document-node()) as element(rng:grammar) {
-    if(node-name($schema/*) ne xs:QName('rng:grammar')) then error(xs:QName('validate:wrong-schema'), 'RelaxNG XML syntax required')
-    else 
-        element rng:grammar {
-            $schema/rng:grammar/@*,
-            $schema/rng:grammar/*[not(node-name(.) = xs:QName('rng:start'))],
-            <rng:start><rng:ref name="{$start}"/></rng:start>
-        }
+declare %private function validate:replace-start-element($input as node(), $schema as document-node()) as element(rng:grammar) {
+    let $start-node-name := 
+        typeswitch ($input)
+            case element() return local-name($input)
+            case document-node() return local-name($input/*)
+            default return error(xs:QName('validate:unsupported-node'), 'type ' || node-name($input) || ' not supported')
+    return
+        if(node-name($schema/*) ne xs:QName('rng:grammar')) then error(xs:QName('validate:wrong-schema'), 'RelaxNG XML syntax required')
+        else 
+            element rng:grammar {
+                $schema/rng:grammar/@*,
+                $schema/rng:grammar/*[not(node-name(.) = xs:QName('rng:start'))],
+                <rng:start><rng:ref name="{$start-node-name}"/></rng:start>
+            }
 };
 
 

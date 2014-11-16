@@ -13,7 +13,9 @@ declare namespace edirom="http://www.edirom.de";
 
 import module namespace config="http://edirom.de/odd-tools/config" at "config.xqm";
 import module namespace sess="http://edirom.de/odd-tools/sess" at "sess.xqm";
+import module namespace ox="http://edirom.de/odd-tools/ox" at "ox.xqm";
 import module namespace validate="http://edirom.de/odd-tools/validate" at "validate.xqm";
+
 
 (:~
  : Initialize the session by creating a session map 
@@ -36,7 +38,8 @@ declare function results:tei-validate($token as xs:string, $params as map(*)) as
     let $session-map := sess:get-session-map($token)
     let $file := $session-map('xmlFile')
     let $fragment := not($file/root()/node-name(*) = (xs:QName('tei:TEI'), xs:QName('tei:teiCorpus')))
-    let $externalNS := $params('externalNS') eq 'true'
+    let $externalNS := $params('externalNS') = 'true'
+    let $odd-present := results:check-for-odd($token, $params)
     let $validation := validate:tei-schema($file, $params('version'), $fragment, $externalNS)
     return 
         <body xmlns="http://www.tei-c.org/ns/1.0">
@@ -47,6 +50,35 @@ declare function results:tei-validate($token as xs:string, $params as map(*)) as
                     <item>{$fragment cast as xs:string}</item>
                     <label>rootElement</label>
                     <item>{$file/name(*) cast as xs:string}</item>
+                    <label>oddFile</label>
+                    <item>{$odd-present cast as xs:string}</item>
+                    {for $fileName in map:keys($session-map)[ends-with(., 'Name')] return (<label>{$fileName}</label>,<item>{$session-map($fileName)}</item>)}
+                </list>
+            </div>
+            {results:jing-report2tei($validation)}
+        </body>
+};
+
+
+(:~
+ : Validate against ODD
+ :
+ : @param $token The token of a session-map with the stored XML files
+ : @param $params A map with parameters including the tei_all version ('version') and wheter to skip external namespaces ('skip-external-ns') 
+ : @return A tei:body element with the validation results
+~:)
+declare function results:odd-validate($token as xs:string, $params as map(*)) as element(tei:body) {
+    let $session-map := sess:get-session-map($token)
+    let $xmlFile := $session-map('xmlFile')
+    let $oddFile := $session-map('oddFile')
+    let $fragment := $params('fragment') = 'true'
+    let $externalNS := $params('externalNS') = 'true'
+    let $validation := validate:odd-schema($xmlFile, $params('version'), $oddFile, $fragment, $externalNS)
+    return 
+        <body xmlns="http://www.tei-c.org/ns/1.0">
+            <div type="properties">
+                <list type="gloss">
+                    {for $i in map:keys($params) return (<label>{$i}</label>,<item>{$params($i)}</item>)}
                     {for $fileName in map:keys($session-map)[ends-with(., 'Name')] return (<label>{$fileName}</label>,<item>{$session-map($fileName)}</item>)}
                 </list>
             </div>
@@ -66,7 +98,6 @@ declare function results:list-element-namespaces($token as xs:string, $params as
     let $session-map := sess:get-session-map($token)
     let $file := $session-map('xmlFile')
     let $ns := distinct-values($file//*/namespace-uri())
-(:    let $store-into-session := session:set-attribute('session-map', map:new(($session-map, map:entry('external-namespaces', $ns != 'http://www.tei-c.org/ns/1.0')))):)
     return 
         <body xmlns="http://www.tei-c.org/ns/1.0">
             <div type="properties">
@@ -86,11 +117,6 @@ declare function results:list-element-namespaces($token as xs:string, $params as
         </body>
 };
 
-(:declare function results:compiled-odd($token as xs:string) as document-node()? {
-    let $session-map := results:get-session-map($token)
-    let $xml-file := $session-map('xmlFile')
-    return
-};:)
 
 declare %private function results:jing-report2tei($report as element(report)) as element(tei:div) {
     <tei:div type="results">
@@ -108,4 +134,34 @@ declare %private function results:jing-report2tei($report as element(report)) as
             </tei:div>
         }
     </tei:div>
+};
+
+
+(:~
+ : Check whether there is an ODD file or an ODD reference
+ : If a reference is found, try to fetch it and store it in the session-map 
+ :
+ : @param $token The token of a session-map with the stored XML files
+ : @param $params A map with parameters
+ : @return a xs:boolean, true if a ODD file could be obtained, false otherwise
+~:)
+declare %private function results:check-for-odd($token as xs:string, $params as map(*)) as xs:boolean {
+    let $session-map := sess:get-session-map($token)
+    return
+        (: An uploaded ODD file gets precedence :)
+        if($session-map('oddFile') instance of document-node()) then true()
+        else 
+            let $xmlFile := $session-map('xmlFile') 
+            let $oddFileMap := ox:get-odd-from-pi($xmlFile)
+            return
+                if(empty($oddFileMap)) then false()
+                else 
+                    let $oddFileName := map:keys($oddFileMap)
+                    let $oddFile := $oddFileMap($oddFileName)
+                    let $store-odd := (
+                        sess:add-entry-to-session-map($token, 'oddFile', $oddFile),
+                        sess:add-entry-to-session-map($token, 'oddFileName', $oddFileName)
+                    )
+                    return 
+                        $oddFile instance of document-node()
 };
