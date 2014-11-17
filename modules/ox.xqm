@@ -29,6 +29,9 @@ declare function ox:get-odd-from-pi($doc as document-node()?) as map(*)? {
     let $oddFile := 
         if($response-status = 200) then
             if($response[2] instance of document-node()) then $response[2]
+            else if($response[2] instance of xs:string) then
+                try { parse-xml($response[2]) }
+                catch * {()}
             else if($response[2] instance of xs:base64Binary) then
                 try { parse-xml(util:binary-to-string($response[2])) }
                 catch * {()}
