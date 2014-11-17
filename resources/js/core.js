@@ -4,58 +4,68 @@ $( document ).ready(function() {
     
     $('button#submit').click(function(){
         hideEverything();
-        validateForm(upload);
-        //console.log(document.getElementById('xmlFile'));
+        validateForm(init);
     });
 });
+
 
 function hideEverything() {
     $('#results,#results ul,#results li').hide();
 }
 
+
 function validateForm(callback) {
-    if($('#xmlFile')[0].files.length === 1) {callback(runTest)}
+    if($('#xmlFile')[0].files.length === 1) {callback(successFunction_init)}
     else {alert('please enter a file')}
 }
+
 
 function getLatestTEIVersion() {
     // TODO
     return '2.7.0'
 }
-/*
-function getJSessionId(){
-    var jsId = document.cookie.match(/JSESSIONID=[^;]+/);
-    if(jsId != null) {
-        if (jsId instanceof Array)
-            jsId = jsId[0].substring(11);
-        else
-            jsId = jsId.substring(11);
-    }
-    return jsId;
-};
-*/
 
-function runTest(token) {
-    //console.log('call tests for token: ' + token + '!');
-    var task = 'list-element-namespaces';
-    var testData = {'task': task, 'format': 'json', 'token': token};
-    $('#results .tei-version').html('TEI version ' + getLatestTEIVersion());
-    $('#results .' + 'tei-validate' + ' li:first').show();
-    $('#results .ajax-spinner').show();
-    $('#results .' + 'tei-validate').show();
+
+function successFunction_init(msg) {
+    var testData = {
+        'task': 'list-element-namespaces', 
+        'format': 'json', 
+        'token': msg.results.sessionID
+    };
+    
+    // Replace placeholder
+    $('#results .fileName').html(msg.properties.xmlFileName);
+    $('#results .rootElement').html('&lt;' + msg.results.rootElement + '&gt;');
+    
+    if(msg.results.supportedFileFormat === 'true') {
+        $('#results .tei-version').html('TEI version ' + getLatestTEIVersion());
+        $('#results .' + 'tei-validate' + ' li:first').show();
+        $('#results .ajax-spinner').show();
+        $('#results .' + 'tei-validate').show();
+        callTest(testData, successFunction_listNamespaces);
+    }
+    else {
+        $('#results .unsupportedFileFormat').show();
+        $('#results .errors').show();
+    }
     $('#results').show();
-    callTest(testData, successFunction_listNamespaces);
 }
 
+
 function successFunction_listNamespaces(msg) {
-    var testData = {'task': 'tei-validate', 'version': '2.7.0', 'format': 'json', 'token': msg.properties.token, 'externalNS': msg.properties.externalNS};
-    $('#results .fileName').html(msg.properties.xmlFileName);
+    var testData = {
+        'task': 'tei-validate', 
+        'version': getLatestTEIVersion(), 
+        'format': 'json', 
+        'token': msg.properties.token, 
+        'externalNS': msg.properties.externalNS
+    };
     if(msg.properties.externalNS === 'true') {$('#results .externalNS').show()};
     callTest(testData, successFunction_teiValidate);
 }
 
+
 function successFunction_teiValidate(msg) {
-    $('#results .rootElement').html('&lt;' + msg.properties.rootElement + '&gt;');
     if(msg.properties.fragment === 'true') {$('#results .fragment').show()};
     
     $('#results .ajax-spinner').hide();
@@ -78,11 +88,13 @@ function successFunction_teiValidate(msg) {
     else {$('#results .conformable').show()};
 }
 
+
 function successFunction_oddValidate(msg) {
     $('#results .ajax-spinner').hide();
     if(msg.results.status === 'invalid') {$('#results .invalid').show()}
     else {$('#results .conformable').show()};
 }
+
 
 function callTest(data, successFunction) {
     $.ajax({
@@ -97,7 +109,8 @@ function callTest(data, successFunction) {
     });
 }
 
-function upload(callback) {
+
+function init(successFunction) {
     var xmlFileInput = document.getElementById('xmlFile');
     var xmlFile = xmlFileInput.files[0];
     var formData = new FormData();
@@ -119,9 +132,7 @@ function upload(callback) {
         //'multipart/form-data',
         
         success: function(msg){
-            var token = msg.sessionID;
-            //console.log(token);
-            callback(token);
+            successFunction(msg);
         }
     });
 };

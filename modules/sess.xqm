@@ -78,5 +78,5 @@ declare %private function sess:parse-upload($req-param as xs:string) as node()? 
     let $input := request:get-uploaded-file-data($req-param)
     return
         try { parse-xml(util:binary-to-string($input)) }
-        catch * {error(xs:QName('edirom:parser-fail'), 'failed to parse as xml file')}
+        catch * {()(:error(xs:QName('edirom:parser-fail'), 'failed to parse as xml file'):)}
 };

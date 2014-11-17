@@ -7,7 +7,7 @@ footer .poweredby img { width: 120px; }
     list-style-type:none;
 }
 
-.invalid {
+.invalid, .unsupportedFileFormat {
     background-color: #f2dede;
     color: #a94442;
 }

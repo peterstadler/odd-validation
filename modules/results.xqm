@@ -18,12 +18,38 @@ import module namespace validate="https://github.com/peterstadler/odd-validation
 
 
 (:~
- : Initialize the session by creating a session map 
+ : Initialize the session by creating a session map and do some basic checks 
  :
  : @return The updated session map
 ~:)
 declare function results:init($token as xs:string?, $params as map(*)?) as element(tei:body) {
-    <tei:body><tei:head type="sessionID">{sess:create-session-map()}</tei:head></tei:body>
+    let $token := sess:create-session-map()
+    let $session-map := sess:get-session-map($token)
+    let $file := $session-map('xmlFile')
+    let $root-node := $file/node-name(*)
+    let $fragment := not($root-node = (xs:QName('tei:TEI'), xs:QName('tei:teiCorpus')))
+    let $supportedFileFormat := namespace-uri-from-QName($root-node) = 'http://www.tei-c.org/ns/1.0'
+    return
+        <body xmlns="http://www.tei-c.org/ns/1.0">
+            <div type="properties">
+                <list type="gloss">
+                    {for $i in map:keys($params) return (<label>{$i}</label>,<item>{$params($i)}</item>)}
+                    {for $fileName in map:keys($session-map)[ends-with(., 'Name')] return (<label>{$fileName}</label>,<item>{$session-map($fileName)}</item>)}
+                </list>
+            </div>
+            <div type="results">
+                <list type="gloss">
+                    <label>sessionID</label>
+                    <item>{$token}</item>
+                    <label>fragment</label>
+                    <item>{$fragment cast as xs:string}</item>
+                    <label>rootElement</label>
+                    <item>{string($root-node)}</item>
+                    <label>supportedFileFormat</label>
+                    <item>{$supportedFileFormat cast as xs:string}</item>
+                </list>
+            </div>
+        </body>
 };
 
 
@@ -37,7 +63,8 @@ declare function results:init($token as xs:string?, $params as map(*)?) as eleme
 declare function results:tei-validate($token as xs:string, $params as map(*)) as element(tei:body) {
     let $session-map := sess:get-session-map($token)
     let $file := $session-map('xmlFile')
-    let $fragment := not($file/root()/node-name(*) = (xs:QName('tei:TEI'), xs:QName('tei:teiCorpus')))
+    let $root-node := $file/node-name(*)
+    let $fragment := not($root-node = (xs:QName('tei:TEI'), xs:QName('tei:teiCorpus')))
     let $externalNS := $params('externalNS') = 'true'
     let $odd-present := results:check-for-odd($token, $params)
     let $validation := validate:tei-schema($file, $params('version'), $fragment, $externalNS)
@@ -48,8 +75,6 @@ declare function results:tei-validate($token as xs:string, $params as map(*)) as
                     {for $i in map:keys($params) return (<label>{$i}</label>,<item>{$params($i)}</item>)}
                     <label>fragment</label>
                     <item>{$fragment cast as xs:string}</item>
-                    <label>rootElement</label>
-                    <item>{$file/name(*) cast as xs:string}</item>
                     <label>oddFile</label>
                     <item>{$odd-present cast as xs:string}</item>
                     {for $fileName in map:keys($session-map)[ends-with(., 'Name')] return (<label>{$fileName}</label>,<item>{$session-map($fileName)}</item>)}
