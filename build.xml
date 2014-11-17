@@ -35,7 +35,7 @@
     
     <target name="call-download">
         <propertycopy name="url" from="${file.name}" />
-        <get dest="${dist.dir}/tmp/${file.name}.rng" skipexisting="yes" src="${url}"/>
+        <get dest="${dist.dir}/tmp/${file.name}" skipexisting="yes" src="${url}"/>
         <!--<echo message="${schema.url}" />-->
     </target>
     
