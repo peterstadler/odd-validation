@@ -64,5 +64,5 @@ declare function config:tei-schema($version as xs:string) as document-node()? {
 ~:)
 declare function config:p5subset($version as xs:string) as document-node()? {
     (: TODO needs to be fleshed out! :)
-    doc($config:app-root || '/p5sources/p5subset.xml')
+    doc($config:app-root || '/p5sources/p5subset.2.7.0.xml')
 };

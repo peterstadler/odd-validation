@@ -22,18 +22,24 @@
     </target>
     
     <target name="download-tei-schemas" depends="init">
-        <mkdir dir="${dist.dir}/schemas"/>
+        <mkdir dir="${dist.dir}/tmp"/>
         <propertyselector property="schema.list" delimiter="," match="tei_all\.\d\.\d\.\d"/>
-        <foreach delimiter="," list="${schema.list}" target="download-tei-schema" param="schema.name"/>
+        <foreach delimiter="," list="${schema.list}" target="call-download" param="file.name"/>
     </target>
     
-    <target name="download-tei-schema">
-        <propertycopy name="schema.url" from="${schema.name}" />
-        <get dest="${dist.dir}/schemas/${schema.name}.rng" skipexisting="yes" src="${schema.url}"/>
+    <target name="download-tei-p5sources" depends="init">
+        <mkdir dir="${dist.dir}/tmp"/>
+        <propertyselector property="p5sources.list" delimiter="," match="p5subset\.\d\.\d\.\d"/>
+        <foreach delimiter="," list="${p5sources.list}" target="call-download" param="file.name"/>
+    </target>
+    
+    <target name="call-download">
+        <propertycopy name="url" from="${file.name}" />
+        <get dest="${dist.dir}/tmp/${file.name}.rng" skipexisting="yes" src="${url}"/>
         <!--<echo message="${schema.url}" />-->
     </target>
     
-    <target name="dist" depends="init, download-tei-schemas">
+    <target name="dist" depends="init, download-tei-schemas, download-tei-p5sources">
         <copy file="expath-pkg.xml.tmpl" tofile="${dist.dir}/expath-pkg.xml" filtering="true" overwrite="true">
             <filterset>
                 <filter token="project.version" value="${project.version}"/>
@@ -53,25 +59,30 @@
                 <exclude name=".git*"/>
                 <exclude name="*.tmpl"/>
                 <exclude name="*.txt"/>
+                <exclude name="*.xpr"/>
                 <exclude name="bower.json"/>
             </fileset>
+        </copy>
+        <!-- Copy downloaded files from tmp dir to final destination and add file extension suffix -->
+        <!-- Leave the files in tmp dir to not download them again with every build (Though if you want to, run `ant clean`) -->
+        <copy todir="${dist.dir}/schemas">
+            <fileset dir="${dist.dir}/tmp">
+                <include name="tei_all.*"/>
+            </fileset>
+            <globmapper from="*" to="*.rng"/>
+        </copy>
+        <copy todir="${dist.dir}/p5sources">
+            <fileset dir="${dist.dir}/tmp">
+                <include name="p5subset.*"/>
+            </fileset>
+            <globmapper from="*" to="*.xml"/>
         </copy>
     </target>
     
     <target name="xar" depends="init, dist">
         <zip destfile="${build.dir}/${project.abbrev}-${project.version}.xar">
             <fileset dir="${dist.dir}">
-                <!--<include name="*.*"/>
-                <include name="modules/**"/>
-                <include name="resources/**"/>
-                <include name="catalogues/**"/>
-                <include name="indices/**"/>
-                <include name="xsl/**"/>
-                <exclude name="build.xml"/>
-                <exclude name="*build.properties"/>
-                <exclude name=".git*"/>
-                <exclude name="*.tmpl"/>
-                <exclude name="*.txt"/>-->
+                <exclude name="tmp/**"/>
             </fileset>
         </zip>
     </target>
