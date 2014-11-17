@@ -11,8 +11,8 @@ import module namespace templates="http://exist-db.org/xquery/templates" ;
  : The following modules provide functions which will be called by the 
  : templating.
  :)
-import module namespace config="http://edirom.de/odd-tools/config" at "config.xqm";
-import module namespace app="http://edirom.de/odd-tools/templates" at "app.xql";
+import module namespace config="https://github.com/peterstadler/odd-validation/modules/config" at "config.xqm";
+import module namespace app="https://github.com/peterstadler/odd-validation/modules/templates" at "app.xql";
 
 declare option exist:serialize "method=html5 media-type=text/html enforce-xhtml=yes";
 

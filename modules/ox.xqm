@@ -4,11 +4,11 @@ xquery version "3.0";
  : A set of helper functions for fetching and converting ODD files
 ~:)
 
-module namespace ox="http://edirom.de/odd-tools/ox";
+module namespace ox="https://github.com/peterstadler/odd-validation/modules/ox";
 
 declare namespace edirom="http://www.edirom.de";
 import module namespace expath-http="http://expath.org/ns/http-client";
-import module namespace config="http://edirom.de/odd-tools/config" at "config.xqm";
+import module namespace config="https://github.com/peterstadler/odd-validation/modules/config" at "config.xqm";
 import module namespace functx="http://www.functx.com";
 
 

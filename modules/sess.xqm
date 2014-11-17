@@ -4,11 +4,11 @@ xquery version "3.0";
  : A set of helper functions for storing and retrieving session information
 ~:)
 
-module namespace sess="http://edirom.de/odd-tools/sess";
+module namespace sess="https://github.com/peterstadler/odd-validation/modules/sess";
 
 declare namespace edirom="http://www.edirom.de";
 declare namespace session="http://exist-db.org/xquery/session";
-import module namespace config="http://edirom.de/odd-tools/config" at "config.xqm";
+import module namespace config="https://github.com/peterstadler/odd-validation/modules/config" at "config.xqm";
 
 (:~
  : Create a new session and store request-parameters as default entries

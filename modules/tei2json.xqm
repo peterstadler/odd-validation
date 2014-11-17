@@ -1,6 +1,6 @@
 xquery version "3.0";
 
-module namespace tei2json="http://edirom.de/odd-tools/tei2json";
+module namespace tei2json="https://github.com/peterstadler/odd-validation/modules/tei2json";
 
 declare namespace tei="http://www.tei-c.org/ns/1.0";
 

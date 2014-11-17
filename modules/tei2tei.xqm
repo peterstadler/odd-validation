@@ -1,10 +1,10 @@
 xquery version "3.0";
 
-module namespace tei2tei="http://edirom.de/odd-tools/tei2tei";
+module namespace tei2tei="https://github.com/peterstadler/odd-validation/modules/tei2tei";
 
 declare namespace tei="http://www.tei-c.org/ns/1.0";
 
-import module namespace config="http://edirom.de/odd-tools/config" at "config.xqm";
+import module namespace config="https://github.com/peterstadler/odd-validation/modules/config" at "config.xqm";
 
 declare function tei2tei:dispatch($body as element(tei:body)) as element(tei:TEI) {
     tei2tei:recurse($config:TEItemplate/tei:TEI, $body)

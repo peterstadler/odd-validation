@@ -4,11 +4,11 @@ declare namespace tei="http://www.tei-c.org/ns/1.0";
 declare namespace edirom="http://www.edirom.de";
 declare namespace expath-http="http://expath.org/ns/http-client";
 
-import module namespace tei2tei="http://edirom.de/odd-tools/tei2tei" at "tei2tei.xqm";
-import module namespace tei2json="http://edirom.de/odd-tools/tei2json" at "tei2json.xqm";
-import module namespace results="http://edirom.de/odd-tools/results" at "results.xqm";
-import module namespace sess="http://edirom.de/odd-tools/sess" at "sess.xqm";
-import module namespace config="http://edirom.de/odd-tools/config" at "config.xqm";
+import module namespace tei2tei="https://github.com/peterstadler/odd-validation/modules/tei2tei" at "tei2tei.xqm";
+import module namespace tei2json="https://github.com/peterstadler/odd-validation/modules/tei2json" at "tei2json.xqm";
+import module namespace results="https://github.com/peterstadler/odd-validation/modules/results" at "results.xqm";
+import module namespace sess="https://github.com/peterstadler/odd-validation/modules/sess" at "sess.xqm";
+import module namespace config="https://github.com/peterstadler/odd-validation/modules/config" at "config.xqm";
 import module namespace templates="http://exist-db.org/xquery/templates";
 import module namespace xqjson="http://xqilla.sourceforge.net/lib/xqjson";
 

@@ -6,15 +6,15 @@ xquery version "3.0";
  : They are in turn automatically exposed to the results.xql as 'task' parameter 
 ~:)
 
-module namespace results="http://edirom.de/odd-tools/results";
+module namespace results="https://github.com/peterstadler/odd-validation/modules/results";
 
 declare namespace tei="http://www.tei-c.org/ns/1.0";
 declare namespace edirom="http://www.edirom.de";
 
-import module namespace config="http://edirom.de/odd-tools/config" at "config.xqm";
-import module namespace sess="http://edirom.de/odd-tools/sess" at "sess.xqm";
-import module namespace ox="http://edirom.de/odd-tools/ox" at "ox.xqm";
-import module namespace validate="http://edirom.de/odd-tools/validate" at "validate.xqm";
+import module namespace config="https://github.com/peterstadler/odd-validation/modules/config" at "config.xqm";
+import module namespace sess="https://github.com/peterstadler/odd-validation/modules/sess" at "sess.xqm";
+import module namespace ox="https://github.com/peterstadler/odd-validation/modules/ox" at "ox.xqm";
+import module namespace validate="https://github.com/peterstadler/odd-validation/modules/validate" at "validate.xqm";
 
 
 (:~

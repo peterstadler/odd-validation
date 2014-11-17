@@ -1,6 +1,6 @@
 xquery version "3.0";
 
-module namespace validate="http://edirom.de/odd-tools/validate";
+module namespace validate="https://github.com/peterstadler/odd-validation/modules/validate";
 
 declare namespace tei="http://www.tei-c.org/ns/1.0";
 declare namespace rng="http://relaxng.org/ns/structure/1.0";
@@ -10,7 +10,7 @@ declare namespace expath-http = "http://expath.org/ns/http-client";
 declare namespace compression = "http://exist-db.org/xquery/compression";
 
 import module namespace functx="http://www.functx.com";
-import module namespace config="http://edirom.de/odd-tools/config" at "config.xqm";
+import module namespace config="https://github.com/peterstadler/odd-validation/modules/config" at "config.xqm";
 
 (:~
  : Main entry function:

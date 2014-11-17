@@ -4,7 +4,7 @@ xquery version "3.0";
  : A set of helper functions to access the application context from
  : within a module.
  :)
-module namespace config="http://edirom.de/odd-tools/config";
+module namespace config="https://github.com/peterstadler/odd-validation/modules/config";
 
 declare namespace templates="http://exist-db.org/xquery/templates";
 

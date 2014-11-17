@@ -1,9 +1,9 @@
 xquery version "3.0";
 
-module namespace app="http://edirom.de/odd-tools/templates";
+module namespace app="https://github.com/peterstadler/odd-validation/modules/templates";
 
 import module namespace templates="http://exist-db.org/xquery/templates";
-import module namespace config="http://edirom.de/odd-tools/config" at "config.xqm";
+import module namespace config="https://github.com/peterstadler/odd-validation/modules/config" at "config.xqm";
 import module namespace functx="http://www.functx.com";
 
 (:~
