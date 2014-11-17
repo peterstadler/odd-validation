@@ -97,8 +97,9 @@ function successFunction_oddValidate(msg) {
 
 
 function callTest(data, successFunction) {
+    var sessionID_urlSuffix = (typeof data.token != 'undefined')? ';jsessionid=' + data.token:'' ;
     $.ajax({
-        url: 'results.xql',
+        url: 'results.xql' + sessionID_urlSuffix,
         type: "GET",
         data: data,
         cache: false,
